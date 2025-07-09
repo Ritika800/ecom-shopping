@@ -58,9 +58,9 @@ const Index = () => {
             className="w-full h-full object-cover"
             onLoadedData={() => setIsVideoLoaded(true)}
           >
-            <source src="https://video-previews.elements.envatousercontent.com/h264-video-previews/34b4f82d-339a-4c07-ba47-e8a87ded3de1/2733283.mp4" type="video/mp4" />
+            <source src="https://v.ftcdn.net/15/21/43/96/700_F_1521439683_JQKU7ordGcM23LwE9mJ1dWc01UH1JmwC.mp4" type="video/mp4" />
           </video>
-          <div className="absolute inset-0 bg-black/60" />
+          <div className="absolute inset-0 bg-black/60 dark:bg-black/70" />
         </div>
 
         {/* Hero Content */}
@@ -101,45 +101,45 @@ const Index = () => {
       </section>
 
       {/* Features Section */}
-      <section className="py-20 bg-slate-800">
+      <section className="py-20 bg-background">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="text-center group">
               <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
                 <Truck className="h-8 w-8 text-white" />
               </div>
-              <h3 className="text-xl font-semibold text-white mb-2">Free Shipping</h3>
-              <p className="text-gray-400">Free shipping on all orders over $100</p>
+              <h3 className="text-xl font-semibold text-foreground mb-2">Free Shipping</h3>
+              <p className="text-muted-foreground">Free shipping on all orders over $100</p>
             </div>
             <div className="text-center group">
               <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
                 <Shield className="h-8 w-8 text-white" />
               </div>
-              <h3 className="text-xl font-semibold text-white mb-2">Quality Guarantee</h3>
-              <p className="text-gray-400">Premium quality materials and craftsmanship</p>
+              <h3 className="text-xl font-semibold text-foreground mb-2">Quality Guarantee</h3>
+              <p className="text-muted-foreground">Premium quality materials and craftsmanship</p>
             </div>
             <div className="text-center group">
               <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
                 <RefreshCw className="h-8 w-8 text-white" />
               </div>
-              <h3 className="text-xl font-semibold text-white mb-2">Easy Returns</h3>
-              <p className="text-gray-400">30-day hassle-free return policy</p>
+              <h3 className="text-xl font-semibold text-foreground mb-2">Easy Returns</h3>
+              <p className="text-muted-foreground">30-day hassle-free return policy</p>
             </div>
           </div>
         </div>
       </section>
 
       {/* Featured Products */}
-      <section className="py-20 bg-slate-900">
+      <section className="py-20 bg-card">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-white mb-4">Featured Products</h2>
-            <p className="text-gray-400 text-lg">Discover our most popular items</p>
+            <h2 className="text-4xl font-bold text-foreground mb-4">Featured Products</h2>
+            <p className="text-muted-foreground text-lg">Discover our most popular items</p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {featuredProducts.map((product, index) => (
-              <Card key={product.id} className={`bg-slate-800 border-slate-700 overflow-hidden group hover:scale-105 transition-all duration-300 animate-fade-in`} style={{ animationDelay: `${index * 100}ms` }}>
+              <Card key={product.id} className={`bg-card border-border overflow-hidden group hover:scale-105 transition-all duration-300 animate-fade-in`} style={{ animationDelay: `${index * 100}ms` }}>
                 <div className="relative overflow-hidden">
                   <img
                     src={product.image}
@@ -149,13 +149,13 @@ const Index = () => {
                   <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors" />
                 </div>
                 <CardContent className="p-4">
-                  <h3 className="text-white font-semibold mb-2">{product.name}</h3>
+                  <h3 className="text-foreground font-semibold mb-2">{product.name}</h3>
                   <div className="flex items-center mb-2">
                     <Star className="h-4 w-4 text-yellow-400 fill-current" />
-                    <span className="text-gray-400 text-sm ml-1">{product.rating}</span>
+                    <span className="text-muted-foreground text-sm ml-1">{product.rating}</span>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-2xl font-bold text-white">${product.price}</span>
+                    <span className="text-2xl font-bold text-foreground">${product.price}</span>
                     <Link to={`/product/${product.id}`}>
                       <Button size="sm" className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600">
                         View
