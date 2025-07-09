@@ -1,4 +1,3 @@
-
 import { Users, Award, Globe, Heart } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 
@@ -14,19 +13,19 @@ const About = () => {
     {
       name: 'Michael Chen',
       role: 'Founder & CEO',
-      image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=300&h=300&fit=crop',
+      image: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=300&h=300&fit=crop',
       description: 'Fashion industry veteran with 20+ years of experience'
     },
     {
       name: 'Sarah Johnson',
       role: 'Head of Design',
-      image: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=300&h=300&fit=crop',
+      image: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=300&h=300&fit=crop',
       description: 'Award-winning designer specializing in contemporary menswear'
     },
     {
       name: 'David Rodriguez',
       role: 'Operations Director',
-      image: 'https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?w=300&h=300&fit=crop',
+      image: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=300&h=300&fit=crop',
       description: 'Logistics expert ensuring quality and timely delivery'
     }
   ];

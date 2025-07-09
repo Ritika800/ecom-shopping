@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Star, Heart, Share2, Truck, Shield, RefreshCw, Minus, Plus } from 'lucide-react';
@@ -25,9 +24,9 @@ const ProductDetail = () => {
     rating: 4.8,
     reviews: 124,
     images: [
-      'https://images.unsplash.com/photo-1520975954732-35dd22299614?w=600&h=800&fit=crop',
-      'https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=600&h=800&fit=crop',
-      'https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=600&h=800&fit=crop'
+      'https://images.unsplash.com/photo-1551028719-00167b16eac5?w=600&h=800&fit=crop',
+      'https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=600&h=800&fit=crop',
+      'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=600&h=800&fit=crop'
     ],
     description: 'This premium leather jacket is crafted from the finest materials, offering both style and durability. Perfect for any occasion, from casual outings to formal events.',
     features: [
@@ -48,21 +47,21 @@ const ProductDetail = () => {
       id: '2',
       name: 'Classic Denim Jeans',
       price: 89,
-      image: 'https://images.unsplash.com/photo-1542272604-787c3835535d?w=300&h=400&fit=crop',
+      image: 'https://images.unsplash.com/photo-1565084888279-aca607ecce0c?w=300&h=400&fit=crop',
       rating: 4.6
     },
     {
       id: '3',
       name: 'Casual Cotton T-Shirt',
       price: 29,
-      image: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=300&h=400&fit=crop',
+      image: 'https://images.unsplash.com/photo-1583743814966-8936f37f4ec4?w=300&h=400&fit=crop',
       rating: 4.7
     },
     {
       id: '4',
       name: 'Formal Business Suit',
       price: 599,
-      image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=400&fit=crop',
+      image: 'https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=300&h=400&fit=crop',
       rating: 4.9
     }
   ];

@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Filter, Grid3X3, List, Star } from 'lucide-react';
@@ -16,7 +15,7 @@ const Products = () => {
       name: 'Premium Leather Jacket',
       price: 299,
       originalPrice: 399,
-      image: 'https://images.unsplash.com/photo-1520975954732-35dd22299614?w=400&h=500&fit=crop',
+      image: 'https://images.unsplash.com/photo-1551028719-00167b16eac5?w=400&h=500&fit=crop',
       rating: 4.8,
       reviews: 124,
       category: 'Jackets',
@@ -27,7 +26,7 @@ const Products = () => {
       id: '2',
       name: 'Classic Denim Jeans',
       price: 89,
-      image: 'https://images.unsplash.com/photo-1542272604-787c3835535d?w=400&h=500&fit=crop',
+      image: 'https://images.unsplash.com/photo-1565084888279-aca607ecce0c?w=400&h=500&fit=crop',
       rating: 4.6,
       reviews: 89,
       category: 'Jeans'
@@ -36,7 +35,7 @@ const Products = () => {
       id: '3',
       name: 'Casual Cotton T-Shirt',
       price: 29,
-      image: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400&h=500&fit=crop',
+      image: 'https://images.unsplash.com/photo-1583743814966-8936f37f4ec4?w=400&h=500&fit=crop',
       rating: 4.7,
       reviews: 203,
       category: 'T-Shirts'
@@ -45,7 +44,7 @@ const Products = () => {
       id: '4',
       name: 'Formal Business Suit',
       price: 599,
-      image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=500&fit=crop',
+      image: 'https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=400&h=500&fit=crop',
       rating: 4.9,
       reviews: 67,
       category: 'Suits',
@@ -56,7 +55,7 @@ const Products = () => {
       name: 'Casual Hoodie',
       price: 79,
       originalPrice: 99,
-      image: 'https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=400&h=500&fit=crop',
+      image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=500&fit=crop',
       rating: 4.5,
       reviews: 156,
       category: 'Hoodies',
@@ -66,7 +65,7 @@ const Products = () => {
       id: '6',
       name: 'Formal Dress Shirt',
       price: 69,
-      image: 'https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=400&h=500&fit=crop',
+      image: 'https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=400&h=500&fit=crop',
       rating: 4.4,
       reviews: 92,
       category: 'Shirts'

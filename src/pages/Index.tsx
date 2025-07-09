@@ -18,28 +18,28 @@ const Index = () => {
       id: '1',
       name: 'Premium Leather Jacket',
       price: 299,
-      image: 'https://images.unsplash.com/photo-1520975954732-35dd22299614?w=400&h=500&fit=crop',
+      image: 'https://images.unsplash.com/photo-1551028719-00167b16eac5?w=400&h=500&fit=crop',
       rating: 4.8
     },
     {
       id: '2',
       name: 'Classic Denim Jeans',
       price: 89,
-      image: 'https://images.unsplash.com/photo-1542272604-787c3835535d?w=400&h=500&fit=crop',
+      image: 'https://images.unsplash.com/photo-1565084888279-aca607ecce0c?w=400&h=500&fit=crop',
       rating: 4.6
     },
     {
       id: '3',
       name: 'Casual Cotton T-Shirt',
       price: 29,
-      image: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400&h=500&fit=crop',
+      image: 'https://images.unsplash.com/photo-1583743814966-8936f37f4ec4?w=400&h=500&fit=crop',
       rating: 4.7
     },
     {
       id: '4',
       name: 'Formal Business Suit',
       price: 599,
-      image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=500&fit=crop',
+      image: 'https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=400&h=500&fit=crop',
       rating: 4.9
     }
   ];

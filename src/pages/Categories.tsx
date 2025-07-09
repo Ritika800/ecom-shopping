@@ -1,4 +1,3 @@
-
 import { Link } from 'react-router-dom';
 import { Card, CardContent } from '@/components/ui/card';
 
@@ -8,42 +7,42 @@ const Categories = () => {
       id: 'jackets',
       name: 'Jackets & Coats',
       description: 'Premium leather jackets, blazers, and coats',
-      image: 'https://images.unsplash.com/photo-1520975954732-35dd22299614?w=400&h=300&fit=crop',
+      image: 'https://images.unsplash.com/photo-1551028719-00167b16eac5?w=400&h=300&fit=crop',
       count: 45
     },
     {
       id: 'shirts',
       name: 'Shirts',
       description: 'Formal dress shirts and casual shirts',
-      image: 'https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=400&h=300&fit=crop',
+      image: 'https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=400&h=300&fit=crop',
       count: 67
     },
     {
       id: 'jeans',
       name: 'Jeans & Trousers',
       description: 'Classic denim and formal trousers',
-      image: 'https://images.unsplash.com/photo-1542272604-787c3835535d?w=400&h=300&fit=crop',
+      image: 'https://images.unsplash.com/photo-1565084888279-aca607ecce0c?w=400&h=300&fit=crop',
       count: 52
     },
     {
       id: 'tshirts',
       name: 'T-Shirts',
       description: 'Casual and premium cotton t-shirts',
-      image: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400&h=300&fit=crop',
+      image: 'https://images.unsplash.com/photo-1583743814966-8936f37f4ec4?w=400&h=300&fit=crop',
       count: 89
     },
     {
       id: 'suits',
       name: 'Suits',
       description: 'Formal business and wedding suits',
-      image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=300&fit=crop',
+      image: 'https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=400&h=300&fit=crop',
       count: 23
     },
     {
       id: 'hoodies',
       name: 'Hoodies & Sweaters',
       description: 'Comfortable hoodies and warm sweaters',
-      image: 'https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=400&h=300&fit=crop',
+      image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=300&fit=crop',
       count: 34
     }
   ];
