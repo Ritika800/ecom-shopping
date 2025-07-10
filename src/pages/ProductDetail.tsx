@@ -6,6 +6,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useCart } from '@/contexts/CartContext';
 import { useToast } from '@/hooks/use-toast';
+import VirtualTryOn from '@/components/VirtualTryOn';
 
 const ProductDetail = () => {
   const { id } = useParams();
@@ -82,6 +83,17 @@ const ProductDetail = () => {
     });
   };
 
+  const getClothingType = (category: string) => {
+    switch (category.toLowerCase()) {
+      case 'jackets': return 'jacket';
+      case 'jeans': return 'pants';
+      case 't-shirts': return 'shirt';
+      case 'shirts': return 'shirt';
+      case 'suits': return 'jacket';
+      default: return 'shirt';
+    }
+  };
+
   return (
     <div className="min-h-screen pt-20 pb-12 bg-slate-900">
       <div className="container mx-auto px-4">
@@ -146,6 +158,22 @@ const ProductDetail = () => {
             </div>
 
             <p className="text-gray-300">{product.description}</p>
+
+            {/* Virtual Try-On Section */}
+            <div className="bg-gradient-to-r from-purple-900/30 to-pink-900/30 border border-purple-500/30 rounded-lg p-4">
+              <h3 className="text-white font-semibold mb-2 flex items-center">
+                ✨ Virtual Try-On Experience
+              </h3>
+              <p className="text-gray-300 text-sm mb-3">
+                See exactly how this item fits and looks on you with our 3D avatar technology
+              </p>
+              <VirtualTryOn 
+                productId={product.id}
+                productName={product.name}
+                productColor={selectedColor.toLowerCase()}
+                productType={getClothingType(product.category) as any}
+              />
+            </div>
 
             {/* Size Selection */}
             <div>

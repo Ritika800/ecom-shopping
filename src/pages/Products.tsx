@@ -1,9 +1,11 @@
+
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Filter, Grid3X3, List, Star } from 'lucide-react';
+import { Filter, Grid3X3, List, Star, User } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import VirtualTryOn from '@/components/VirtualTryOn';
 
 const Products = () => {
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
@@ -71,6 +73,19 @@ const Products = () => {
       category: 'Shirts'
     }
   ];
+
+  // Map product category to clothing type for 3D avatar
+  const getClothingType = (category: string) => {
+    switch (category.toLowerCase()) {
+      case 'jackets': return 'jacket';
+      case 'jeans': return 'pants';
+      case 't-shirts': return 'shirt';
+      case 'shirts': return 'shirt';
+      case 'suits': return 'jacket';
+      case 'hoodies': return 'shirt';
+      default: return 'shirt';
+    }
+  };
 
   return (
     <div className="min-h-screen pt-20 pb-12 bg-slate-900">
@@ -157,6 +172,16 @@ const Products = () => {
                   {product.isSale && (
                     <span className="bg-red-500 text-white text-xs px-2 py-1 rounded">SALE</span>
                   )}
+                </div>
+
+                {/* 3D Try-On Overlay */}
+                <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                  <VirtualTryOn 
+                    productId={product.id}
+                    productName={product.name}
+                    productColor="black"
+                    productType={getClothingType(product.category) as any}
+                  />
                 </div>
               </div>
               
