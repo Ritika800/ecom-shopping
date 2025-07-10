@@ -35,7 +35,7 @@ const BoyAvatar = ({ selectedClothing, customization }: { selectedClothing?: any
     if (selectedClothing?.type === type) {
       return selectedClothing.color.toLowerCase();
     }
-    return type === 'shirt' ? '#4169E1' : '#2F4F4F'; // Default blue shirt, dark pants
+    return type === 'shirt' ? '#4169E1' : '#2F4F4F';
   };
 
   const bodyScale: [number, number, number] = customization.bodyType === 'slim' ? [0.9, 1, 0.9] : 
@@ -53,11 +53,8 @@ const BoyAvatar = ({ selectedClothing, customization }: { selectedClothing?: any
         <meshStandardMaterial color={customization.skinTone} />
       </Sphere>
 
-      {/* Hair - Boy style */}
+      {/* Hair */}
       <Box position={[0, 1.95, 0]} args={[0.35, 0.15, 0.35]}>
-        <meshStandardMaterial color={customization.hairColor} />
-      </Box>
-      <Box position={[0, 1.85, -0.15]} args={[0.32, 0.12, 0.1]}>
         <meshStandardMaterial color={customization.hairColor} />
       </Box>
 
@@ -68,16 +65,6 @@ const BoyAvatar = ({ selectedClothing, customization }: { selectedClothing?: any
       <Sphere position={[0.08, 1.85, 0.15]} args={[0.02, 16, 16]}>
         <meshStandardMaterial color="#000000" />
       </Sphere>
-
-      {/* Nose */}
-      <Box position={[0, 1.78, 0.16]} args={[0.02, 0.04, 0.02]}>
-        <meshStandardMaterial color={customization.skinTone} />
-      </Box>
-
-      {/* Neck */}
-      <Cylinder position={[0, 1.6, 0]} args={[0.06, 0.06, 0.15]}>
-        <meshStandardMaterial color={customization.skinTone} />
-      </Cylinder>
 
       {/* Torso/Shirt */}
       <Box
@@ -104,19 +91,6 @@ const BoyAvatar = ({ selectedClothing, customization }: { selectedClothing?: any
         <meshStandardMaterial color={customization.skinTone} />
       </Cylinder>
 
-      {/* Hands */}
-      <Sphere position={[-0.6, 1.3, 0]} args={[0.06, 16, 16]} scale={bodyScale}>
-        <meshStandardMaterial color={customization.skinTone} />
-      </Sphere>
-      <Sphere position={[0.6, 1.3, 0]} args={[0.06, 16, 16]} scale={bodyScale}>
-        <meshStandardMaterial color={customization.skinTone} />
-      </Sphere>
-
-      {/* Waist */}
-      <Box position={[0, 0.8, 0]} args={[0.42, 0.15, 0.23]} scale={bodyScale}>
-        <meshStandardMaterial color={getClothingColor('pants')} />
-      </Box>
-
       {/* Legs/Pants */}
       <Cylinder position={[-0.12, 0.4, 0]} args={[0.09, 0.09, 0.6]} scale={bodyScale}>
         <meshStandardMaterial color={getClothingColor('pants')} />
@@ -125,28 +99,7 @@ const BoyAvatar = ({ selectedClothing, customization }: { selectedClothing?: any
         <meshStandardMaterial color={getClothingColor('pants')} />
       </Cylinder>
 
-      {/* Feet/Shoes */}
-      <Box position={[-0.12, 0.05, 0.08]} args={[0.12, 0.08, 0.25]} scale={bodyScale}>
-        <meshStandardMaterial color="#8B4513" />
-      </Box>
-      <Box position={[0.12, 0.05, 0.08]} args={[0.12, 0.08, 0.25]} scale={bodyScale}>
-        <meshStandardMaterial color="#8B4513" />
-      </Box>
-
-      {/* Text label when hovered */}
-      {hovered && (
-        <Text
-          position={[0, 2.8, 0]}
-          fontSize={0.12}
-          color="white"
-          anchorX="center"
-          anchorY="middle"
-        >
-          {selectedClothing ? `Trying on: ${selectedClothing.name}` : 'Select clothes to try on'}
-        </Text>
-      )}
-
-      {/* Product highlight effect */}
+      {/* Product highlight */}
       {selectedClothing && (
         <Text
           position={[0, 2.5, 0]}
@@ -180,7 +133,11 @@ const Avatar3D = ({ selectedClothing, onAvatarCustomize }: Avatar3DProps) => {
     <div className="w-full h-full bg-gradient-to-b from-sky-100 to-blue-100 dark:from-slate-800 dark:to-slate-900 rounded-lg overflow-hidden relative">
       <Canvas 
         camera={{ position: [0, 1.5, 4], fov: 50 }}
-        gl={{ preserveDrawingBuffer: true }}
+        gl={{ 
+          preserveDrawingBuffer: true,
+          antialias: true,
+          alpha: false
+        }}
         onCreated={({ gl }) => {
           gl.setClearColor('#87CEEB');
         }}
@@ -188,7 +145,6 @@ const Avatar3D = ({ selectedClothing, onAvatarCustomize }: Avatar3DProps) => {
         <ambientLight intensity={0.6} />
         <directionalLight position={[10, 10, 5]} intensity={1} />
         <pointLight position={[-10, 5, -10]} intensity={0.3} />
-        <spotLight position={[0, 10, 0]} intensity={0.5} angle={0.3} penumbra={0.1} />
         
         <BoyAvatar selectedClothing={selectedClothing} customization={customization} />
         
