@@ -38,7 +38,7 @@ const BoyAvatar = ({ selectedClothing, customization }: { selectedClothing?: any
     return type === 'shirt' ? '#4169E1' : '#2F4F4F'; // Default blue shirt, dark pants
   };
 
-  const bodyScale = customization.bodyType === 'slim' ? [0.9, 1, 0.9] : 
+  const bodyScale: [number, number, number] = customization.bodyType === 'slim' ? [0.9, 1, 0.9] : 
                    customization.bodyType === 'athletic' ? [1.1, 1.1, 1] : [1, 1, 1];
 
   return (
