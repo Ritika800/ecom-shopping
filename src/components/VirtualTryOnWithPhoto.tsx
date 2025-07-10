@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { RotateCcw, Shirt, User } from 'lucide-react';
+import { RotateCcw, Shirt, User, Palette } from 'lucide-react';
 
 interface VirtualTryOnWithPhotoProps {
   userPhoto: string;
@@ -17,6 +17,58 @@ interface VirtualTryOnWithPhotoProps {
 
 const VirtualTryOnWithPhoto = ({ userPhoto, selectedClothing, onBack }: VirtualTryOnWithPhotoProps) => {
   const [overlayOpacity, setOverlayOpacity] = useState(0.7);
+  const [fitStyle, setFitStyle] = useState<'loose' | 'regular' | 'tight'>('regular');
+
+  const getClothingOverlay = () => {
+    if (!selectedClothing) return null;
+
+    const baseStyles = {
+      position: 'absolute' as const,
+      background: `linear-gradient(135deg, ${selectedClothing.color}aa, ${selectedClothing.color}66)`,
+      opacity: overlayOpacity,
+      border: `2px solid ${selectedClothing.color}`,
+      backdropFilter: 'blur(1px)',
+      borderRadius: selectedClothing.type === 'jacket' ? '12px' : '8px',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+    };
+
+    const getFitDimensions = () => {
+      const baseWidth = fitStyle === 'loose' ? '45%' : fitStyle === 'tight' ? '35%' : '40%';
+      const baseHeight = selectedClothing.type === 'pants' ? '60%' : selectedClothing.type === 'dress' ? '70%' : '45%';
+      
+      return { width: baseWidth, height: baseHeight };
+    };
+
+    const getPosition = () => {
+      const marginTop = selectedClothing.type === 'pants' ? '25%' : 
+                       selectedClothing.type === 'dress' ? '15%' : '10%';
+      return { marginTop };
+    };
+
+    const dimensions = getFitDimensions();
+    const position = getPosition();
+
+    return (
+      <div 
+        style={{
+          ...baseStyles,
+          ...dimensions,
+          ...position,
+          left: '50%',
+          transform: 'translateX(-50%)',
+        }}
+      >
+        <div className="text-center">
+          <Shirt className="h-8 w-8 text-white/80 mb-2" />
+          <div className="text-white/90 text-xs font-medium">
+            {selectedClothing.type.charAt(0).toUpperCase() + selectedClothing.type.slice(1)}
+          </div>
+        </div>
+      </div>
+    );
+  };
 
   return (
     <div className="w-full h-full bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-800 dark:to-slate-900 rounded-lg overflow-hidden">
@@ -46,51 +98,58 @@ const VirtualTryOnWithPhoto = ({ userPhoto, selectedClothing, onBack }: VirtualT
               className="w-full h-full object-cover"
             />
             
-            {/* Clothing overlay simulation */}
+            {/* Clothing overlay */}
+            {getClothingOverlay()}
+
+            {/* Product info overlay */}
             {selectedClothing && (
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div 
-                  className="relative"
-                  style={{
-                    background: `linear-gradient(135deg, ${selectedClothing.color}aa, ${selectedClothing.color}66)`,
-                    opacity: overlayOpacity,
-                    width: '40%',
-                    height: selectedClothing.type === 'pants' ? '60%' : '45%',
-                    marginTop: selectedClothing.type === 'pants' ? '20%' : '5%',
-                    borderRadius: selectedClothing.type === 'jacket' ? '12px' : '8px',
-                    border: `2px solid ${selectedClothing.color}`,
-                    backdropFilter: 'blur(1px)'
-                  }}
-                >
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <Shirt className="h-8 w-8 text-white/80" />
-                  </div>
-                </div>
+              <div className="absolute top-4 left-4 bg-black/70 text-white px-3 py-2 rounded-lg backdrop-blur-sm">
+                <div className="text-sm font-medium">{selectedClothing.name}</div>
+                <div className="text-xs opacity-80 capitalize">{selectedClothing.type}</div>
               </div>
             )}
 
-            {/* Controls overlay */}
-            <div className="absolute bottom-4 left-4 right-4 bg-white/90 dark:bg-slate-800/90 backdrop-blur rounded-lg p-3">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm font-medium text-gray-900 dark:text-white">
-                    {selectedClothing ? `Trying on: ${selectedClothing.name}` : 'Select an item to try on'}
-                  </p>
-                  <p className="text-xs text-gray-600 dark:text-gray-400">
-                    Adjust opacity to see how it looks
-                  </p>
+            {/* Enhanced controls overlay */}
+            <div className="absolute bottom-4 left-4 right-4 bg-white/95 dark:bg-slate-800/95 backdrop-blur rounded-lg p-4 shadow-lg">
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-sm font-medium text-gray-900 dark:text-white">
+                      {selectedClothing ? `Trying on: ${selectedClothing.name}` : 'Select an item to try on'}
+                    </p>
+                    <p className="text-xs text-gray-600 dark:text-gray-400">
+                      Adjust settings to see how it looks
+                    </p>
+                  </div>
+                  <Palette className="h-5 w-5 text-gray-500" />
                 </div>
-                <div className="flex items-center gap-2">
-                  <span className="text-xs text-gray-600 dark:text-gray-400">Opacity</span>
-                  <input
-                    type="range"
-                    min="0.1"
-                    max="1"
-                    step="0.1"
-                    value={overlayOpacity}
-                    onChange={(e) => setOverlayOpacity(parseFloat(e.target.value))}
-                    className="w-20"
-                  />
+                
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="text-xs text-gray-600 dark:text-gray-400 mb-1 block">Opacity</label>
+                    <input
+                      type="range"
+                      min="0.3"
+                      max="1"
+                      step="0.1"
+                      value={overlayOpacity}
+                      onChange={(e) => setOverlayOpacity(parseFloat(e.target.value))}
+                      className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
+                    />
+                  </div>
+                  
+                  <div>
+                    <label className="text-xs text-gray-600 dark:text-gray-400 mb-1 block">Fit</label>
+                    <select
+                      value={fitStyle}
+                      onChange={(e) => setFitStyle(e.target.value as any)}
+                      className="w-full text-xs p-1 rounded border bg-white dark:bg-slate-700 dark:border-slate-600 text-gray-900 dark:text-white"
+                    >
+                      <option value="loose">Loose</option>
+                      <option value="regular">Regular</option>
+                      <option value="tight">Tight</option>
+                    </select>
+                  </div>
                 </div>
               </div>
             </div>
