@@ -120,7 +120,13 @@ const Avatar3D = ({ selectedClothing, onAvatarCustomize }: Avatar3DProps) => {
 
   return (
     <div className="w-full h-full bg-gradient-to-b from-slate-100 to-slate-200 dark:from-slate-800 dark:to-slate-900 rounded-lg overflow-hidden">
-      <Canvas camera={{ position: [0, 1, 3], fov: 50 }}>
+      <Canvas 
+        camera={{ position: [0, 1, 3], fov: 50 }}
+        gl={{ preserveDrawingBuffer: true }}
+        onCreated={({ gl }) => {
+          gl.setClearColor('#f1f5f9');
+        }}
+      >
         <ambientLight intensity={0.5} />
         <directionalLight position={[10, 10, 5]} intensity={1} />
         <pointLight position={[0, 3, 0]} intensity={0.5} />

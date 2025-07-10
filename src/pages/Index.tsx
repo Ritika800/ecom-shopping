@@ -1,7 +1,7 @@
 
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Star, Truck, Shield, RefreshCw } from 'lucide-react';
+import { ArrowRight, Star, Truck, Shield, RefreshCw, User, Camera } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 
@@ -84,6 +84,12 @@ const Index = () => {
                 Shop Now <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
             </Link>
+            <Link to="/virtual-try-on">
+              <Button size="lg" className="bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600 text-white px-8 py-4 text-lg">
+                <Camera className="mr-2 h-5 w-5" />
+                Try Virtual Fitting
+              </Button>
+            </Link>
             <Link to="/categories">
               <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-black px-8 py-4 text-lg">
                 Browse Categories
@@ -97,6 +103,34 @@ const Index = () => {
           <div className="w-6 h-10 border-2 border-white rounded-full flex justify-center">
             <div className="w-1 h-3 bg-white rounded-full mt-2 animate-pulse" />
           </div>
+        </div>
+      </section>
+
+      {/* Virtual Try-On Section */}
+      <section className="py-20 bg-gradient-to-r from-blue-600 to-purple-600">
+        <div className="container mx-auto px-4 text-center">
+          <h2 className="text-4xl font-bold text-white mb-4">Try Before You Buy</h2>
+          <p className="text-white/90 text-lg mb-8 max-w-2xl mx-auto">
+            Experience our revolutionary virtual try-on technology. Create your 3D avatar or use your own photo to see exactly how every item fits and looks on you.
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto mb-8">
+            <div className="bg-white/10 backdrop-blur rounded-lg p-6">
+              <User className="h-12 w-12 text-white mx-auto mb-4" />
+              <h3 className="text-xl font-semibold text-white mb-2">3D Avatar</h3>
+              <p className="text-white/80">Create a customizable 3D avatar and see clothes from every angle</p>
+            </div>
+            <div className="bg-white/10 backdrop-blur rounded-lg p-6">
+              <Camera className="h-12 w-12 text-white mx-auto mb-4" />
+              <h3 className="text-xl font-semibold text-white mb-2">Photo Try-On</h3>
+              <p className="text-white/80">Upload your photo for realistic virtual fitting experience</p>
+            </div>
+          </div>
+          <Link to="/virtual-try-on">
+            <Button size="lg" className="bg-white text-blue-600 hover:bg-gray-100 px-8 py-3">
+              <Camera className="mr-2 h-5 w-5" />
+              Start Virtual Try-On
+            </Button>
+          </Link>
         </div>
       </section>
 
