@@ -1,7 +1,6 @@
-
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { OrbitControls, Text, Box, Sphere, Cylinder } from '@react-three/drei';
+import { OrbitControls } from '@react-three/drei';
 import { Mesh } from 'three';
 
 interface Avatar3DProps {
@@ -9,7 +8,8 @@ interface Avatar3DProps {
     id: string;
     name: string;
     color: string;
-    type: 'shirt' | 'pants' | 'jacket' | 'dress';
+    type: 'shirt' | 'pants' | 'jacket';
+    size?: string;
   };
   onAvatarCustomize?: (customization: AvatarCustomization) => void;
 }
@@ -21,12 +21,11 @@ interface AvatarCustomization {
   hairColor: string;
 }
 
-const BoyAvatar = ({ selectedClothing, customization }: { selectedClothing?: any; customization: AvatarCustomization }) => {
+const SimpleAvatar = ({ selectedClothing, customization }: { 
+  selectedClothing?: any; 
+  customization: AvatarCustomization;
+}) => {
   const meshRef = useRef<Mesh>(null);
-  const [hovered, setHovered] = useState(false);
-
-  // Add debugging
-  console.log('BoyAvatar props:', { selectedClothing, customization });
 
   useFrame((state) => {
     if (meshRef.current) {
@@ -36,97 +35,75 @@ const BoyAvatar = ({ selectedClothing, customization }: { selectedClothing?: any
 
   const getClothingColor = (type: string) => {
     if (selectedClothing?.type === type) {
-      return selectedClothing.color?.toLowerCase() || '#4169E1';
+      return selectedClothing.color || '#4169E1';
     }
     return type === 'shirt' ? '#4169E1' : '#2F4F4F';
   };
 
-  const getSizeScale = (size: string): number => {
-    if (!size) return 1.0;
-    const sizeMap: { [key: string]: number } = {
-      'XS': 0.85, 'S': 0.9, 'M': 1.0, 'L': 1.1, 'XL': 1.2, 'XXL': 1.3,
-      '28': 0.85, '30': 0.9, '32': 1.0, '34': 1.1, '36': 1.2, '38': 1.3
-    };
-    return sizeMap[size] || 1.0;
-  };
-
-  // Ensure all values are properly defined
-  const bodyScale: [number, number, number] = customization?.bodyType === 'slim' ? [0.9, 1, 0.9] : 
-                   customization?.bodyType === 'athletic' ? [1.1, 1.1, 1] : [1, 1, 1];
-  
-  const sizeScale = selectedClothing?.size ? getSizeScale(selectedClothing.size) : 1.0;
-
-  console.log('Computed values:', { bodyScale, sizeScale, customization: customization || {} });
-
   return (
     <group>
       {/* Head */}
-      <Sphere
-        position={[0, 1.8, 0]}
-        args={[0.18, 32, 32]}
-        onPointerOver={() => setHovered(true)}
-        onPointerOut={() => setHovered(false)}
-      >
-        <meshStandardMaterial color={customization?.skinTone || '#FDBCB4'} />
-      </Sphere>
+      <mesh position={[0, 1.8, 0]}>
+        <sphereGeometry args={[0.18, 32, 32]} />
+        <meshStandardMaterial color={customization.skinTone} />
+      </mesh>
 
       {/* Hair */}
-      <Box position={[0, 1.95, 0]} args={[0.35, 0.15, 0.35]}>
-        <meshStandardMaterial color={customization?.hairColor || '#8B4513'} />
-      </Box>
+      <mesh position={[0, 1.95, 0]}>
+        <boxGeometry args={[0.35, 0.15, 0.35]} />
+        <meshStandardMaterial color={customization.hairColor} />
+      </mesh>
 
       {/* Eyes */}
-      <Sphere position={[-0.08, 1.85, 0.15]} args={[0.02, 16, 16]}>
+      <mesh position={[-0.08, 1.85, 0.15]}>
+        <sphereGeometry args={[0.02, 16, 16]} />
         <meshStandardMaterial color="#000000" />
-      </Sphere>
-      <Sphere position={[0.08, 1.85, 0.15]} args={[0.02, 16, 16]}>
+      </mesh>
+      <mesh position={[0.08, 1.85, 0.15]}>
+        <sphereGeometry args={[0.02, 16, 16]} />
         <meshStandardMaterial color="#000000" />
-      </Sphere>
+      </mesh>
 
       {/* Torso/Shirt */}
-      <Box
-        ref={meshRef}
-        position={[0, 1.2, 0]}
-        args={[0.45 * sizeScale, 0.7 * sizeScale, 0.25]}
-        scale={bodyScale}
-      >
+      <mesh ref={meshRef} position={[0, 1.2, 0]}>
+        <boxGeometry args={[0.45, 0.7, 0.25]} />
         <meshStandardMaterial color={getClothingColor('shirt')} />
-      </Box>
+      </mesh>
 
       {/* Jacket overlay if selected */}
       {selectedClothing?.type === 'jacket' && (
-        <Box position={[0, 1.2, 0]} args={[0.5 * sizeScale, 0.75 * sizeScale, 0.28]} scale={bodyScale}>
+        <mesh position={[0, 1.2, 0]}>
+          <boxGeometry args={[0.5, 0.75, 0.28]} />
           <meshStandardMaterial color={getClothingColor('jacket')} transparent opacity={0.9} />
-        </Box>
+        </mesh>
       )}
 
       {/* Arms */}
-      <Cylinder position={[-0.35, 1.3, 0]} args={[0.08, 0.08, 0.5]} rotation={[0, 0, Math.PI / 2]} scale={bodyScale}>
-        <meshStandardMaterial color={customization?.skinTone || '#FDBCB4'} />
-      </Cylinder>
-      <Cylinder position={[0.35, 1.3, 0]} args={[0.08, 0.08, 0.5]} rotation={[0, 0, Math.PI / 2]} scale={bodyScale}>
-        <meshStandardMaterial color={customization?.skinTone || '#FDBCB4'} />
-      </Cylinder>
+      <mesh position={[-0.35, 1.3, 0]} rotation={[0, 0, Math.PI / 2]}>
+        <cylinderGeometry args={[0.08, 0.08, 0.5]} />
+        <meshStandardMaterial color={customization.skinTone} />
+      </mesh>
+      <mesh position={[0.35, 1.3, 0]} rotation={[0, 0, Math.PI / 2]}>
+        <cylinderGeometry args={[0.08, 0.08, 0.5]} />
+        <meshStandardMaterial color={customization.skinTone} />
+      </mesh>
 
       {/* Legs/Pants */}
-      <Cylinder position={[-0.12, 0.4, 0]} args={[0.09 * sizeScale, 0.09 * sizeScale, 0.6]} scale={bodyScale}>
+      <mesh position={[-0.12, 0.4, 0]}>
+        <cylinderGeometry args={[0.09, 0.09, 0.6]} />
         <meshStandardMaterial color={getClothingColor('pants')} />
-      </Cylinder>
-      <Cylinder position={[0.12, 0.4, 0]} args={[0.09 * sizeScale, 0.09 * sizeScale, 0.6]} scale={bodyScale}>
+      </mesh>
+      <mesh position={[0.12, 0.4, 0]}>
+        <cylinderGeometry args={[0.09, 0.09, 0.6]} />
         <meshStandardMaterial color={getClothingColor('pants')} />
-      </Cylinder>
+      </mesh>
 
       {/* Product highlight */}
       {selectedClothing && (
-        <Text
-          position={[0, 2.5, 0]}
-          fontSize={0.08}
-          color="#FFD700"
-          anchorX="center"
-          anchorY="middle"
-        >
-          ✨ {selectedClothing.type.charAt(0).toUpperCase() + selectedClothing.type.slice(1)} - Size {selectedClothing.size} ✨
-        </Text>
+        <mesh position={[0, 2.5, 0]}>
+          <planeGeometry args={[2, 0.3]} />
+          <meshBasicMaterial color="#FFD700" transparent opacity={0.8} />
+        </mesh>
       )}
     </group>
   );
@@ -140,14 +117,12 @@ const Avatar3D = ({ selectedClothing, onAvatarCustomize }: Avatar3DProps) => {
     hairColor: '#8B4513'
   });
 
-  // Add debugging
-  console.log('Avatar3D props:', { selectedClothing, onAvatarCustomize });
-
   const handleCustomizationChange = (field: keyof AvatarCustomization, value: any) => {
-    console.log('Customization change:', { field, value });
     const newCustomization = { ...customization, [field]: value };
     setCustomization(newCustomization);
-    onAvatarCustomize?.(newCustomization);
+    if (onAvatarCustomize) {
+      onAvatarCustomize(newCustomization);
+    }
   };
 
   return (
@@ -167,7 +142,7 @@ const Avatar3D = ({ selectedClothing, onAvatarCustomize }: Avatar3DProps) => {
         <directionalLight position={[10, 10, 5]} intensity={1} />
         <pointLight position={[-10, 5, -10]} intensity={0.3} />
         
-        <BoyAvatar selectedClothing={selectedClothing} customization={customization} />
+        <SimpleAvatar selectedClothing={selectedClothing} customization={customization} />
         
         <OrbitControls
           enablePan={false}
@@ -237,7 +212,9 @@ const Avatar3D = ({ selectedClothing, onAvatarCustomize }: Avatar3DProps) => {
       {selectedClothing && (
         <div className="absolute top-4 right-4 bg-blue-500 text-white px-4 py-2 rounded-lg shadow-lg">
           <div className="text-sm font-medium">{selectedClothing.name}</div>
-          <div className="text-xs opacity-90 capitalize">{selectedClothing.type}</div>
+          <div className="text-xs opacity-90 capitalize">
+            {selectedClothing.type} {selectedClothing.size && `- Size ${selectedClothing.size}`}
+          </div>
         </div>
       )}
     </div>
