@@ -38,8 +38,18 @@ const BoyAvatar = ({ selectedClothing, customization }: { selectedClothing?: any
     return type === 'shirt' ? '#4169E1' : '#2F4F4F';
   };
 
+  const getSizeScale = (size: string): number => {
+    const sizeMap: { [key: string]: number } = {
+      'XS': 0.85, 'S': 0.9, 'M': 1.0, 'L': 1.1, 'XL': 1.2, 'XXL': 1.3,
+      '28': 0.85, '30': 0.9, '32': 1.0, '34': 1.1, '36': 1.2, '38': 1.3
+    };
+    return sizeMap[size] || 1.0;
+  };
+
   const bodyScale: [number, number, number] = customization.bodyType === 'slim' ? [0.9, 1, 0.9] : 
                    customization.bodyType === 'athletic' ? [1.1, 1.1, 1] : [1, 1, 1];
+  
+  const sizeScale = selectedClothing?.size ? getSizeScale(selectedClothing.size) : 1.0;
 
   return (
     <group>
@@ -70,7 +80,7 @@ const BoyAvatar = ({ selectedClothing, customization }: { selectedClothing?: any
       <Box
         ref={meshRef}
         position={[0, 1.2, 0]}
-        args={[0.45, 0.7, 0.25]}
+        args={[0.45 * sizeScale, 0.7 * sizeScale, 0.25]}
         scale={bodyScale}
       >
         <meshStandardMaterial color={getClothingColor('shirt')} />
@@ -78,7 +88,7 @@ const BoyAvatar = ({ selectedClothing, customization }: { selectedClothing?: any
 
       {/* Jacket overlay if selected */}
       {selectedClothing?.type === 'jacket' && (
-        <Box position={[0, 1.2, 0]} args={[0.5, 0.75, 0.28]} scale={bodyScale}>
+        <Box position={[0, 1.2, 0]} args={[0.5 * sizeScale, 0.75 * sizeScale, 0.28]} scale={bodyScale}>
           <meshStandardMaterial color={getClothingColor('jacket')} transparent opacity={0.9} />
         </Box>
       )}
@@ -92,10 +102,10 @@ const BoyAvatar = ({ selectedClothing, customization }: { selectedClothing?: any
       </Cylinder>
 
       {/* Legs/Pants */}
-      <Cylinder position={[-0.12, 0.4, 0]} args={[0.09, 0.09, 0.6]} scale={bodyScale}>
+      <Cylinder position={[-0.12, 0.4, 0]} args={[0.09 * sizeScale, 0.09 * sizeScale, 0.6]} scale={bodyScale}>
         <meshStandardMaterial color={getClothingColor('pants')} />
       </Cylinder>
-      <Cylinder position={[0.12, 0.4, 0]} args={[0.09, 0.09, 0.6]} scale={bodyScale}>
+      <Cylinder position={[0.12, 0.4, 0]} args={[0.09 * sizeScale, 0.09 * sizeScale, 0.6]} scale={bodyScale}>
         <meshStandardMaterial color={getClothingColor('pants')} />
       </Cylinder>
 
@@ -108,7 +118,7 @@ const BoyAvatar = ({ selectedClothing, customization }: { selectedClothing?: any
           anchorX="center"
           anchorY="middle"
         >
-          ✨ {selectedClothing.type.charAt(0).toUpperCase() + selectedClothing.type.slice(1)} ✨
+          ✨ {selectedClothing.type.charAt(0).toUpperCase() + selectedClothing.type.slice(1)} - Size {selectedClothing.size} ✨
         </Text>
       )}
     </group>
