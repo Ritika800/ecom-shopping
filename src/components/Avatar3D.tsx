@@ -25,6 +25,9 @@ const BoyAvatar = ({ selectedClothing, customization }: { selectedClothing?: any
   const meshRef = useRef<Mesh>(null);
   const [hovered, setHovered] = useState(false);
 
+  // Add debugging
+  console.log('BoyAvatar props:', { selectedClothing, customization });
+
   useFrame((state) => {
     if (meshRef.current) {
       meshRef.current.rotation.y = Math.sin(state.clock.elapsedTime * 0.5) * 0.05;
@@ -33,12 +36,13 @@ const BoyAvatar = ({ selectedClothing, customization }: { selectedClothing?: any
 
   const getClothingColor = (type: string) => {
     if (selectedClothing?.type === type) {
-      return selectedClothing.color.toLowerCase();
+      return selectedClothing.color?.toLowerCase() || '#4169E1';
     }
     return type === 'shirt' ? '#4169E1' : '#2F4F4F';
   };
 
   const getSizeScale = (size: string): number => {
+    if (!size) return 1.0;
     const sizeMap: { [key: string]: number } = {
       'XS': 0.85, 'S': 0.9, 'M': 1.0, 'L': 1.1, 'XL': 1.2, 'XXL': 1.3,
       '28': 0.85, '30': 0.9, '32': 1.0, '34': 1.1, '36': 1.2, '38': 1.3
@@ -46,10 +50,13 @@ const BoyAvatar = ({ selectedClothing, customization }: { selectedClothing?: any
     return sizeMap[size] || 1.0;
   };
 
-  const bodyScale: [number, number, number] = customization.bodyType === 'slim' ? [0.9, 1, 0.9] : 
-                   customization.bodyType === 'athletic' ? [1.1, 1.1, 1] : [1, 1, 1];
+  // Ensure all values are properly defined
+  const bodyScale: [number, number, number] = customization?.bodyType === 'slim' ? [0.9, 1, 0.9] : 
+                   customization?.bodyType === 'athletic' ? [1.1, 1.1, 1] : [1, 1, 1];
   
   const sizeScale = selectedClothing?.size ? getSizeScale(selectedClothing.size) : 1.0;
+
+  console.log('Computed values:', { bodyScale, sizeScale, customization: customization || {} });
 
   return (
     <group>
@@ -60,12 +67,12 @@ const BoyAvatar = ({ selectedClothing, customization }: { selectedClothing?: any
         onPointerOver={() => setHovered(true)}
         onPointerOut={() => setHovered(false)}
       >
-        <meshStandardMaterial color={customization.skinTone} />
+        <meshStandardMaterial color={customization?.skinTone || '#FDBCB4'} />
       </Sphere>
 
       {/* Hair */}
       <Box position={[0, 1.95, 0]} args={[0.35, 0.15, 0.35]}>
-        <meshStandardMaterial color={customization.hairColor} />
+        <meshStandardMaterial color={customization?.hairColor || '#8B4513'} />
       </Box>
 
       {/* Eyes */}
@@ -95,10 +102,10 @@ const BoyAvatar = ({ selectedClothing, customization }: { selectedClothing?: any
 
       {/* Arms */}
       <Cylinder position={[-0.35, 1.3, 0]} args={[0.08, 0.08, 0.5]} rotation={[0, 0, Math.PI / 2]} scale={bodyScale}>
-        <meshStandardMaterial color={customization.skinTone} />
+        <meshStandardMaterial color={customization?.skinTone || '#FDBCB4'} />
       </Cylinder>
       <Cylinder position={[0.35, 1.3, 0]} args={[0.08, 0.08, 0.5]} rotation={[0, 0, Math.PI / 2]} scale={bodyScale}>
-        <meshStandardMaterial color={customization.skinTone} />
+        <meshStandardMaterial color={customization?.skinTone || '#FDBCB4'} />
       </Cylinder>
 
       {/* Legs/Pants */}
@@ -133,7 +140,11 @@ const Avatar3D = ({ selectedClothing, onAvatarCustomize }: Avatar3DProps) => {
     hairColor: '#8B4513'
   });
 
+  // Add debugging
+  console.log('Avatar3D props:', { selectedClothing, onAvatarCustomize });
+
   const handleCustomizationChange = (field: keyof AvatarCustomization, value: any) => {
+    console.log('Customization change:', { field, value });
     const newCustomization = { ...customization, [field]: value };
     setCustomization(newCustomization);
     onAvatarCustomize?.(newCustomization);
