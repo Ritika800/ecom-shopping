@@ -1,7 +1,7 @@
 import { useState, Suspense } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls, Environment, ContactShadows } from '@react-three/drei';
-import { HumanModel } from './HumanModel';
+import { RealisticAvatar } from '@/components/RealisticAvatar';
 import { ClothingSystem } from './ClothingSystem';
 import { CustomizationPanel } from './CustomizationPanel';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -66,10 +66,11 @@ const Avatar3DScene = ({ customization, selectedClothing }: {
       
       {/* 3D Models */}
       <group>
-        <HumanModel 
-          customization={customization} 
-          selectedClothing={selectedClothing}
-        />
+        <RealisticAvatar 
+          position={[0, 0, 0]} 
+          scale={[1, 1, 1]} 
+/>
+
         <ClothingSystem 
           selectedClothing={selectedClothing} 
           bodyType={customization.bodyType}
